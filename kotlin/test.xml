@@ -1,0 +1,15 @@
+<xmlcep>
+    <cep>01001-000</cep>
+    <logradouro>Praça da Sé</logradouro>
+    <complemento>lado ímpar</complemento>
+    <unidade/>
+    <bairro>Sé</bairro>
+    <localidade>São Paulo</localidade>
+    <uf>SP</uf>
+    <estado>São Paulo</estado>
+    <regiao>Sudeste</regiao>
+    <ibge>3550308</ibge>
+    <gia>1004</gia>
+    <ddd>11</ddd>
+    <siafi>7107</siafi>
+</xmlcep>
