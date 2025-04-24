@@ -1,15 +1,21 @@
-import express, { Router } from "express";
-import findPosts from "../src/controller/Post";
-import config from "./lib/multer"
-import multer from "multer";
+import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest } from "fastify";
+import { UserController } from "./controllers/User";
+import { PostController } from "./controllers/Post";
 
+export async function routes(fastify: FastifyInstance, options: FastifyPluginOptions){
+    fastify.post("/register", async(req: FastifyRequest, rel: FastifyReply) =>{
+        return new UserController().createUser(req, rel);
+    })
 
-const upload = multer(config);
+    fastify.post("/login", async(req: FastifyRequest, rel: FastifyReply) =>{
+        return new UserController().Login(req, rel);
+    })
 
-export const router: Router = express.Router();
+    fastify.post("/posts", async(req: FastifyRequest, rel: FastifyReply) =>{
+        return new PostController().createPost(req, rel);
+    })
 
-router.post("/posts", upload.array("images"), createPost());
-router.get("/posts", findPosts);
-router.post("/posts/${id}", id, findPost);
-
-
+    fastify.get("/posts", async(req: FastifyRequest, rel: FastifyReply) =>{
+        return new PostController().createPost(req, rel);
+    })
+}

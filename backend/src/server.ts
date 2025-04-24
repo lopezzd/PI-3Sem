@@ -1,15 +1,24 @@
-import express from "express";
-import path from "path";
+import Fastify from "fastify";
+import { routes } from "./routes";
+import cors from "@fastify/cors";
+import fastifyMultipart from '@fastify/multipart';
 
-import { router } from "./routes";
+
+const app = Fastify({logger: true});
 
 const port = 3333;
 
-const app = express();
+const start = async () => {
 
-app.use(express.json());
-app.use(router);
+    await app.register(fastifyMultipart);
+    await app.register(cors);
+    await app.register(routes);
 
-app.use("/images", express.static(path.join(__dirname, "..", "uploads")));
+    try{
+        await app.listen({port})
+    }catch(err){
+        process.exit(1);
+    }
+}
 
-app.listen(port, () => console.log(`listening on port ${port}`));
+start();
