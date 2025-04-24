@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(cuid()) @map("_id") @db.ObjectId
+  id          String   @id @default(cuid()) @map("_id")
   email       String   @unique
   name        String
   password    String
@@ -29,12 +29,12 @@ model User {
 }
 
 model Post {
-  id        String    @id @default(cuid()) @map("_id") @db.ObjectId
+  id        String    @id @default(cuid()) @map("_id")
   title     String
   content   String?
   published Boolean   @default(true)
   author    User      @relation(fields: [authorId], references: [id])
-  authorId  String    @db.ObjectId
+  authorId  String
   category  Category  @default(MODERADO)
   status    Status    @default(ATIVO)
   address   String
@@ -47,9 +47,9 @@ model Post {
 }
 
 model Picture {
-  id     String @id @default(cuid()) @map("_id") @db.ObjectId
+  id     String @id @default(cuid()) @map("_id")
   post   Post   @relation(fields: [postId], references: [id])
-  postId String @db.ObjectId
+  postId String
   path   String
 
   createdAt DateTime @default(now())
