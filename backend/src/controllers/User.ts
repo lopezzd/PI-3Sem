@@ -6,7 +6,7 @@ import { loginValidation } from "../utils/loginValidation";
 import prisma from "../lib/prisma";
 
 class UserController {
-  async createUser(req: FastifyRequest, res: FastifyReply) {
+  async create(req: FastifyRequest, res: FastifyReply) {
     const parsedData = UserValidation.safeParse(req.body);
 
     if (!parsedData.success) {

@@ -6,7 +6,7 @@ import fs from "fs";
 import { pipeline } from "stream/promises";
 
 class PostController {
-  async createPost(req: FastifyRequest, res: FastifyReply) {
+  async create(req: FastifyRequest, res: FastifyReply) {
     const parts = (req as any).parts();
     const pictures: string[] = [];
     const body: any = {};
@@ -37,15 +37,43 @@ class PostController {
 
     const postService = new PostService();
 
-    const post = await postService.execute({
+    const post = await postService.create({
       ...parsedData.data,
     });
 
     res.send(post);
   }
 
-  async getAllPosts(req: FastifyRequest, res: FastifyReply){
-    
+  async getAllPosts(req: FastifyRequest, res: FastifyReply) {
+    const postService = new PostService();
+
+    try {
+      const posts = await postService.getAll();
+
+      res.send(posts);
+    } catch (error) {
+      console.error("Erro ao buscar posts:", error);
+      res.status(500).send({ error: "Erro ao buscar os posts." });
+    }
+  }
+
+  async getPost(req: FastifyRequest, res: FastifyReply) {
+    const { id } = req.params as { id: string };
+
+    const postService = new PostService();
+
+    try {
+      const post = await postService.get(id);
+
+      if (!post) {
+        return res.status(404).send({ error: "Post não encontrado" });
+      }
+
+      return post;
+    } catch (error) {
+      console.error("Erro ao buscar posts:", error);
+      return res.status(500).send({ error: "Erro ao buscar os posts." });
+    }
   }
 }
 
